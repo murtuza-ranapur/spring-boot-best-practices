@@ -14,6 +14,6 @@ public interface StudentService {
 	
 	StudentDTO update(StudentDTO studentDTO);
 	
-	boolean delete(StudentDTO studentDTO);
+	void delete(Long id);
 	
 }
