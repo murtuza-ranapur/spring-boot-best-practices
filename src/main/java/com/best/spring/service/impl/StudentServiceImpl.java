@@ -3,6 +3,7 @@ package com.best.spring.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
 import com.best.spring.domain.Student;
@@ -17,10 +18,10 @@ public class StudentServiceImpl extends IdCheckingService<Student, StudentDTO, L
 	private final StudentRepository studentRepository;
 	private final StudentMapper mapper;
 	
-	public StudentServiceImpl(StudentRepository studentRepository, StudentMapper mapper) {
+	public StudentServiceImpl(StudentRepository studentRepository) {
 		super(studentRepository);
 		this.studentRepository = studentRepository;
-		this.mapper = mapper;
+		this.mapper = Mappers.getMapper(StudentMapper.class);
 	}
 
 	@Override
@@ -46,7 +47,7 @@ public class StudentServiceImpl extends IdCheckingService<Student, StudentDTO, L
 
 	@Override
 	public StudentDTO update(StudentDTO studentDTO) {
-		getIfExistByDto(studentDTO);
+		getIfExistById(studentDTO.getId());
 		Student studentUpdated = mapper.toModel(studentDTO);
 		studentUpdated = studentRepository.save(studentUpdated);
 		return mapper.toDto(studentUpdated);
