@@ -25,10 +25,10 @@ import com.best.spring.service.impl.StudentServiceImpl;
 public class StudentServiceTest {
 
 	@Mock
-	private StudentRepository studentRepository;
+	private StudentRepository studentRepositoryMock;
 
 	@InjectMocks
-	private StudentServiceImpl studentService;
+	private StudentServiceImpl studentServiceMock;
 
 	@Test
 	public void getAll_returnsListOfStudentDTO() {
@@ -49,7 +49,7 @@ public class StudentServiceTest {
 		student2.setYear(2L);
 		students.add(student2);
 
-		Mockito.when(studentRepository.findAll()).thenReturn(students);
+		Mockito.when(studentRepositoryMock.findAll()).thenReturn(students);
 
 		List<StudentDTO> studentsDTO = new ArrayList<>();
 		StudentDTO studentdto1 = new StudentDTO();
@@ -67,7 +67,7 @@ public class StudentServiceTest {
 		studentDto2.setSem(3L);
 		studentDto2.setYear(2L);
 		studentsDTO.add(studentDto2);
-		List<StudentDTO> found = studentService.getAll();
+		List<StudentDTO> found = studentServiceMock.getAll();
 
 		assertEquals(studentsDTO, found);
 	}
@@ -83,7 +83,7 @@ public class StudentServiceTest {
 
 		Optional<Student> opStudent = Optional.of(student1);
 
-		Mockito.when(studentRepository.findById(1L)).thenReturn(opStudent);
+		Mockito.when(studentRepositoryMock.findById(1L)).thenReturn(opStudent);
 
 		StudentDTO studentdto1 = new StudentDTO();
 		studentdto1.setName("Murtuza");
@@ -92,7 +92,7 @@ public class StudentServiceTest {
 		studentdto1.setSem(2L);
 		studentdto1.setYear(1L);
 
-		StudentDTO found = studentService.get(1L);
+		StudentDTO found = studentServiceMock.get(1L);
 
 		assertEquals(studentdto1, found);
 	}
@@ -100,10 +100,10 @@ public class StudentServiceTest {
 	@Test
 	public void get_givenNonExistentUserId_shouldThrowExeption() {
 
-		Mockito.when(studentRepository.findById(1L)).thenReturn(Optional.empty());
+		Mockito.when(studentRepositoryMock.findById(1L)).thenReturn(Optional.empty());
 
 		assertThrows(IllegalArgumentException.class, () -> {
-			studentService.get(1L);
+			studentServiceMock.get(1L);
 		});
 	}
 
@@ -135,9 +135,9 @@ public class StudentServiceTest {
 		studentdto2.setSem(2L);
 		studentdto2.setYear(1L);
 		
-		Mockito.when(studentRepository.save(student1)).thenReturn(student2);
+		Mockito.when(studentRepositoryMock.save(student1)).thenReturn(student2);
 
-		StudentDTO found = studentService.add(studentdto1);
+		StudentDTO found = studentServiceMock.add(studentdto1);
 		assertEquals(studentdto2, found);
 	}
 
@@ -159,10 +159,10 @@ public class StudentServiceTest {
 
 		Optional<Student> opStudent = Optional.of(student1);
 		
-		Mockito.when(studentRepository.findById(1L)).thenReturn(opStudent);
-		Mockito.when(studentRepository.save(student1)).thenReturn(student1);
+		Mockito.when(studentRepositoryMock.findById(1L)).thenReturn(opStudent);
+		Mockito.when(studentRepositoryMock.save(student1)).thenReturn(student1);
 
-		StudentDTO found = studentService.update(studentdto1);
+		StudentDTO found = studentServiceMock.update(studentdto1);
 		assertEquals(studentdto1, found);
 	}
 	
@@ -184,10 +184,10 @@ public class StudentServiceTest {
 
 		Optional<Student> opStudent = Optional.of(student1);
 		
-		Mockito.when(studentRepository.findById(1L)).thenReturn(opStudent);
+		Mockito.when(studentRepositoryMock.findById(1L)).thenReturn(opStudent);
 		
-	    studentService.delete(1L);
+	    studentServiceMock.delete(1L);
 		
-		verify(studentRepository, times(1)).delete(student1);
+		verify(studentRepositoryMock, times(1)).delete(student1);
 	}
 }
