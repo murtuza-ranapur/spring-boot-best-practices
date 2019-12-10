@@ -5,10 +5,10 @@ import com.best.spring.dto.StudentDTO;
 import com.best.spring.mapper.StudentMapper;
 import com.best.spring.repository.StudentRepository;
 import com.best.spring.service.StudentService;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
-import org.mapstruct.factory.Mappers;
-import org.springframework.stereotype.Service;
 
 @Service
 public class StudentServiceImpl extends IdCheckingService<Student, StudentDTO, Long>
@@ -17,10 +17,10 @@ public class StudentServiceImpl extends IdCheckingService<Student, StudentDTO, L
   private final StudentRepository studentRepository;
   private final StudentMapper mapper;
 
-  public StudentServiceImpl(StudentRepository studentRepository) {
+  public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper) {
     super(studentRepository);
     this.studentRepository = studentRepository;
-    this.mapper = Mappers.getMapper(StudentMapper.class);
+    this.mapper = studentMapper;
   }
 
   @Override

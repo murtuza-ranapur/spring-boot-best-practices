@@ -1,6 +1,5 @@
 package com.best.spring.dto;
 
-import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
@@ -10,13 +9,13 @@ public class StudentDTO {
 
   private String name;
 
-  private String course;
+  private Long semester;
 
   private Long year;
 
-  private Long sem;
+  private Long batch;
 
-  private LocalDateTime createdDate;
+  private String group;
 
-  private LocalDateTime lastModifiedDate;
+  private CourseDTO course;
 }
