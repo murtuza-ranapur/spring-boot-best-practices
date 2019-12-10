@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class StudentServiceImpl extends IdCheckingService<Student, StudentDTO, Long>
+public class StudentServiceImpl extends IdCheckingService<Student, Long>
     implements StudentService {
 
   private final StudentRepository studentRepository;

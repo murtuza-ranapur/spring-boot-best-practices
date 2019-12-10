@@ -2,7 +2,9 @@ package com.best.spring.service.impl;
 
 import org.springframework.data.repository.CrudRepository;
 
-public class IdCheckingService<Domain, Dto, IdType> {
+import java.lang.reflect.ParameterizedType;
+
+public class IdCheckingService<Domain, IdType> {
 
   private final CrudRepository<Domain, IdType> repository;
 
@@ -11,11 +13,13 @@ public class IdCheckingService<Domain, Dto, IdType> {
   }
 
   protected Domain getIfExistById(IdType id) {
+    String entity = ((Class<Domain>) ((ParameterizedType) getClass()
+            .getGenericSuperclass()).getActualTypeArguments()[0]).getSimpleName();
     return repository
         .findById(id)
         .orElseThrow(
             () ->
                 new IllegalArgumentException(
-                    String.format("'Student' with id %s doesn't exist", id)));
+                    String.format("'%s' with id %s doesn't exist",entity, id)));
   }
 }
