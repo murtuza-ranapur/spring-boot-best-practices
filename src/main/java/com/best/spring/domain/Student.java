@@ -1,13 +1,11 @@
 package com.best.spring.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -25,6 +23,7 @@ public class Student extends Autditable {
 
   private Long batch;
 
+  @Column(name = "class_section")
   private String group;
 
   @ManyToOne private Course course;
