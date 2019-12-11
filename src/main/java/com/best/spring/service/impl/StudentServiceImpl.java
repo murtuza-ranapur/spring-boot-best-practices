@@ -54,4 +54,12 @@ public class StudentServiceImpl extends IdCheckingService<Student, Long>
     Student student = getIfExistById(id);
     studentRepository.delete(student);
   }
+
+  @Override
+  public StudentDTO findByStudentIdAndCourseId(Long studentId, Long courseId) {
+    Student student = studentRepository.findByIdAndCourseId(studentId,courseId)
+            .orElseThrow(() ->new IllegalArgumentException(
+                    String.format("'Student' with id %s doesn't exist in 'Course' wiith id %s", studentId, courseId)));
+    return mapper.toDto(student);
+  }
 }

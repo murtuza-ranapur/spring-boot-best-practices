@@ -2,9 +2,12 @@ package com.best.spring.service.impl;
 
 import com.best.spring.domain.Course;
 import com.best.spring.dto.CourseDTO;
+import com.best.spring.dto.StudentDTO;
 import com.best.spring.mapper.CourseMapper;
+import com.best.spring.mapper.StudentMapper;
 import com.best.spring.repository.CourseRepository;
 import com.best.spring.service.CourseService;
+import com.best.spring.service.StudentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,11 +19,18 @@ public class CourseServiceImpl extends IdCheckingService<Course, Long>
 
   private final CourseRepository courseRepository;
   private final CourseMapper mapper;
+  private final StudentService studentService;
+  private final StudentMapper studentMapper;
 
-  public CourseServiceImpl(CourseRepository courseRepository, CourseMapper mapper) {
+  public CourseServiceImpl(CourseRepository courseRepository,
+                           CourseMapper mapper,
+                           StudentService studentService,
+                           StudentMapper studentMapper) {
     super(courseRepository);
     this.courseRepository = courseRepository;
     this.mapper = mapper;
+    this.studentService = studentService;
+    this.studentMapper = studentMapper;
   }
 
   @Override
@@ -53,5 +63,38 @@ public class CourseServiceImpl extends IdCheckingService<Course, Long>
   public void delete(Long id) {
     Course course = getIfExistById(id);
     courseRepository.delete(course);
+  }
+
+  @Override
+  public StudentDTO addStudentToCourse(Long courseId, StudentDTO studentDTO) {
+    CourseDTO courseDTO = get(courseId);
+    studentDTO.setCourse(courseDTO);
+    return studentService.add(studentDTO);
+  }
+
+  @Override
+  public StudentDTO updateStudentInCourse(Long courseId, StudentDTO studentDTO) {
+    getStudentInCourse(courseId, studentDTO.getId());
+    return studentService.update(studentDTO);
+  }
+
+  @Override
+  public List<StudentDTO> getStudentsInCourse(Long courseId) {
+    Course course = getIfExistById(courseId);
+    return course.getStudentList()
+            .stream()
+            .map(studentMapper::toDto)
+            .collect(Collectors.toList());
+  }
+
+  @Override
+  public StudentDTO getStudentInCourse(Long courseId, Long studentId) {
+    return studentService.findByStudentIdAndCourseId(studentId,courseId);
+  }
+
+  @Override
+  public void deleteStudentInCourse(Long courseId, Long studentId) {
+    getStudentInCourse(courseId, studentId);
+    studentService.delete(studentId);
   }
 }
