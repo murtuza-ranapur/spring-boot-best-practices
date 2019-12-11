@@ -74,7 +74,10 @@ public class CourseServiceImpl extends IdCheckingService<Course, Long>
 
   @Override
   public StudentDTO updateStudentInCourse(Long courseId, StudentDTO studentDTO) {
+    CourseDTO courseDTO = new CourseDTO();
+    courseDTO.setId(courseId);
     getStudentInCourse(courseId, studentDTO.getId());
+    studentDTO.setCourse(courseDTO);
     return studentService.update(studentDTO);
   }
 
