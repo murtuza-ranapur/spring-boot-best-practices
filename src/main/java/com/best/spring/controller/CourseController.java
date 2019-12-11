@@ -1,7 +1,11 @@
 package com.best.spring.controller;
 
 import com.best.spring.dto.CourseDTO;
+import com.best.spring.dto.CourseRequestDto;
 import com.best.spring.dto.StudentDTO;
+import com.best.spring.dto.StudentRequestDto;
+import com.best.spring.mapper.CourseRequestMapper;
+import com.best.spring.mapper.StudentRequestMapper;
 import com.best.spring.service.CourseService;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +16,15 @@ import java.util.List;
 public class CourseController {
 
     private final CourseService courseService;
+    private final CourseRequestMapper courseRequestMapper;
+    private final StudentRequestMapper studentRequestMapper;
 
-    public CourseController(CourseService courseService){
+    public CourseController(CourseService courseService,
+                            CourseRequestMapper courseRequestMapper,
+                            StudentRequestMapper studentRequestMapper){
         this.courseService = courseService;
+        this.courseRequestMapper = courseRequestMapper;
+        this.studentRequestMapper = studentRequestMapper;
     }
 
     @GetMapping
@@ -39,25 +49,25 @@ public class CourseController {
     }
 
     @PostMapping
-    public CourseDTO addCourse(@RequestBody CourseDTO courseDTO){
-        return courseService.add(courseDTO);
+    public CourseDTO addCourse(@RequestBody CourseRequestDto courseDTO){
+        return courseService.add(courseRequestMapper.toCourseDto(courseDTO));
     }
 
     @PostMapping("/{courseId}/students")
     public StudentDTO addStudentInCourse(@PathVariable Long courseId,
-                                        @RequestBody StudentDTO studentDTO){
-        return courseService.addStudentToCourse(courseId,studentDTO);
+                                         @RequestBody StudentRequestDto studentRequestDto){
+        return courseService.addStudentToCourse(courseId,studentRequestMapper.toStudentDto(studentRequestDto));
     }
 
     @PutMapping
-    public CourseDTO updateCourse(@RequestBody CourseDTO courseDTO){
-        return courseService.update(courseDTO);
+    public CourseDTO updateCourse(@RequestBody CourseRequestDto courseDTO){
+        return courseService.update(courseRequestMapper.toCourseDto(courseDTO));
     }
 
     @PutMapping("/{courseId}/students")
     public StudentDTO updateStudentInCourse(@PathVariable Long courseId,
-                                           @RequestBody StudentDTO studentDTO){
-        return courseService.updateStudentInCourse(courseId,studentDTO);
+                                            @RequestBody StudentRequestDto studentRequestDto){
+        return courseService.updateStudentInCourse(courseId,studentRequestMapper.toStudentDto(studentRequestDto));
     }
 
     @DeleteMapping("/{id}")
