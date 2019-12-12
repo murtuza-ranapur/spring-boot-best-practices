@@ -1,5 +1,6 @@
 package com.best.spring.service.impl;
 
+import com.best.spring.exception.EntityNotFoundException;
 import java.lang.reflect.ParameterizedType;
 import org.springframework.data.repository.CrudRepository;
 
@@ -18,9 +19,6 @@ public class IdCheckingService<Domain, IdType> {
             .getSimpleName();
     return repository
         .findById(id)
-        .orElseThrow(
-            () ->
-                new IllegalArgumentException(
-                    String.format("'%s' with id %s doesn't exist", entity, id)));
+        .orElseThrow(() -> new EntityNotFoundException("entity.idnotpresent", entity, id));
   }
 }

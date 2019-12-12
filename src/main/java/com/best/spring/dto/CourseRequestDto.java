@@ -10,7 +10,7 @@ public class CourseRequestDto {
   private Long id;
 
   @NotNull
-  @Pattern(regexp = "^[a-zA-Z\\s][\\sa-zA-Z]*$")
+  @Pattern(regexp = "^[a-zA-Z\\s][\\sa-zA-Z]*$", message = "{pattern.alphaspace}")
   @Size(max = 100)
   private String name;
 

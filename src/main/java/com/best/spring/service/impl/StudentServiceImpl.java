@@ -2,6 +2,7 @@ package com.best.spring.service.impl;
 
 import com.best.spring.domain.Student;
 import com.best.spring.dto.StudentDTO;
+import com.best.spring.exception.EntityNotFoundException;
 import com.best.spring.mapper.StudentMapper;
 import com.best.spring.repository.StudentRepository;
 import com.best.spring.service.StudentService;
@@ -60,10 +61,8 @@ public class StudentServiceImpl extends IdCheckingService<Student, Long> impleme
             .findByIdAndCourseId(studentId, courseId)
             .orElseThrow(
                 () ->
-                    new IllegalArgumentException(
-                        String.format(
-                            "'Student' with id %s doesn't exist in 'Course' wiith id %s",
-                            studentId, courseId)));
+                    new EntityNotFoundException(
+                        "entity.student.idnotpresent", studentId, courseId));
     return mapper.toDto(student);
   }
 }
