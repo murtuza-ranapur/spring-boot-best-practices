@@ -8,6 +8,5 @@ import java.util.List;
 @Data
 public class ValidationErrorResponse {
 
-    private List<Validation> validations = new ArrayList<>();
-
+  private List<Validation> validations = new ArrayList<>();
 }

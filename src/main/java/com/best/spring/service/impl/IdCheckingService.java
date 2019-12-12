@@ -1,8 +1,7 @@
 package com.best.spring.service.impl;
 
-import org.springframework.data.repository.CrudRepository;
-
 import java.lang.reflect.ParameterizedType;
+import org.springframework.data.repository.CrudRepository;
 
 public class IdCheckingService<Domain, IdType> {
 
@@ -13,13 +12,15 @@ public class IdCheckingService<Domain, IdType> {
   }
 
   protected Domain getIfExistById(IdType id) {
-    String entity = ((Class<Domain>) ((ParameterizedType) getClass()
-            .getGenericSuperclass()).getActualTypeArguments()[0]).getSimpleName();
+    String entity =
+        ((Class<Domain>)
+                ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0])
+            .getSimpleName();
     return repository
         .findById(id)
         .orElseThrow(
             () ->
                 new IllegalArgumentException(
-                    String.format("'%s' with id %s doesn't exist",entity, id)));
+                    String.format("'%s' with id %s doesn't exist", entity, id)));
   }
 }

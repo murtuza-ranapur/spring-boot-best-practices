@@ -30,14 +30,6 @@ public class CourseServiceTest {
 
   @InjectMocks private CourseServiceImpl courseServiceMock;
 
-  /**
-   * ██████╗  ██████╗ ███████╗██╗████████╗██╗██╗   ██╗███████╗
-   * ██╔══██╗██╔═══██╗██╔════╝██║╚══██╔══╝██║██║   ██║██╔════╝
-   * ██████╔╝██║   ██║███████╗██║   ██║   ██║██║   ██║█████╗
-   * ██╔═══╝ ██║   ██║╚════██║██║   ██║   ██║╚██╗ ██╔╝██╔══╝
-   * ██║     ╚██████╔╝███████║██║   ██║   ██║ ╚████╔╝ ███████╗
-   * ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═╝   ╚═╝  ╚═══╝  ╚══════╝
-   */
   @Test
   public void getAll_returnsListOfCourseDTO() {
     List<Course> courses = new ArrayList<>();
@@ -146,7 +138,7 @@ public class CourseServiceTest {
 
     Mockito.when(courseMapper.toCourse(coursedto1)).thenReturn(course1);
     Mockito.when(courseMapper.fromCourse(course1)).thenReturn(coursedto1);
-    
+
     Mockito.when(courseRepositoryMock.findById(1L)).thenReturn(opCourse);
     Mockito.when(courseRepositoryMock.save(course1)).thenReturn(course1);
 
@@ -175,14 +167,6 @@ public class CourseServiceTest {
     verify(courseRepositoryMock, times(1)).delete(course1);
   }
 
-  /**
-   * ███╗   ██╗███████╗ ██████╗  █████╗ ████████╗██╗██╗   ██╗███████╗
-   * ████╗  ██║██╔════╝██╔════╝ ██╔══██╗╚══██╔══╝██║██║   ██║██╔════╝
-   * ██╔██╗ ██║█████╗  ██║  ███╗███████║   ██║   ██║██║   ██║█████╗
-   * ██║╚██╗██║██╔══╝  ██║   ██║██╔══██║   ██║   ██║╚██╗ ██╔╝██╔══╝
-   * ██║ ╚████║███████╗╚██████╔╝██║  ██║   ██║   ██║ ╚████╔╝ ███████╗
-   * ╚═╝  ╚═══╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═══╝  ╚══════╝
-   */
   @Test
   public void get_givenNonExistentUserId_shouldThrowExeption() {
 

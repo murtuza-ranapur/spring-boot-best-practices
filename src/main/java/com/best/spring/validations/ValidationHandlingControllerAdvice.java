@@ -13,26 +13,27 @@ import javax.validation.ConstraintViolationException;
 @RestControllerAdvice
 public class ValidationHandlingControllerAdvice {
 
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ValidationErrorResponse onConstraintViolationException(ConstraintViolationException e){
-        ValidationErrorResponse validationErrorResponse = new ValidationErrorResponse();
-        for(ConstraintViolation violation: e.getConstraintViolations()){
-            validationErrorResponse.getValidations().add(
-                    new Validation(violation.getPropertyPath().toString(), violation.getMessage()));
-        }
-        return validationErrorResponse;
+  @ExceptionHandler(ConstraintViolationException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ValidationErrorResponse onConstraintViolationException(ConstraintViolationException e) {
+    ValidationErrorResponse validationErrorResponse = new ValidationErrorResponse();
+    for (ConstraintViolation violation : e.getConstraintViolations()) {
+      validationErrorResponse
+          .getValidations()
+          .add(new Validation(violation.getPropertyPath().toString(), violation.getMessage()));
     }
+    return validationErrorResponse;
+  }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ValidationErrorResponse onMethodArgumentNotValidException(
-            MethodArgumentNotValidException e) {
-        ValidationErrorResponse error = new ValidationErrorResponse();
-        for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
-            error.getValidations().add(
-                    new Validation(fieldError.getField(), fieldError.getDefaultMessage()));
-        }
-        return error;
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  ValidationErrorResponse onMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    ValidationErrorResponse error = new ValidationErrorResponse();
+    for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
+      error
+          .getValidations()
+          .add(new Validation(fieldError.getField(), fieldError.getDefaultMessage()));
     }
+    return error;
+  }
 }

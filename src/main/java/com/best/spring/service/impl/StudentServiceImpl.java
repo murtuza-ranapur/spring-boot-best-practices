@@ -5,14 +5,12 @@ import com.best.spring.dto.StudentDTO;
 import com.best.spring.mapper.StudentMapper;
 import com.best.spring.repository.StudentRepository;
 import com.best.spring.service.StudentService;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
-public class StudentServiceImpl extends IdCheckingService<Student, Long>
-    implements StudentService {
+public class StudentServiceImpl extends IdCheckingService<Student, Long> implements StudentService {
 
   private final StudentRepository studentRepository;
   private final StudentMapper mapper;
@@ -57,9 +55,15 @@ public class StudentServiceImpl extends IdCheckingService<Student, Long>
 
   @Override
   public StudentDTO findByStudentIdAndCourseId(Long studentId, Long courseId) {
-    Student student = studentRepository.findByIdAndCourseId(studentId,courseId)
-            .orElseThrow(() ->new IllegalArgumentException(
-                    String.format("'Student' with id %s doesn't exist in 'Course' wiith id %s", studentId, courseId)));
+    Student student =
+        studentRepository
+            .findByIdAndCourseId(studentId, courseId)
+            .orElseThrow(
+                () ->
+                    new IllegalArgumentException(
+                        String.format(
+                            "'Student' with id %s doesn't exist in 'Course' wiith id %s",
+                            studentId, courseId)));
     return mapper.toDto(student);
   }
 }

@@ -8,24 +8,23 @@ import com.best.spring.mapper.StudentMapper;
 import com.best.spring.repository.CourseRepository;
 import com.best.spring.service.CourseService;
 import com.best.spring.service.StudentService;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
-public class CourseServiceImpl extends IdCheckingService<Course, Long>
-    implements CourseService {
+public class CourseServiceImpl extends IdCheckingService<Course, Long> implements CourseService {
 
   private final CourseRepository courseRepository;
   private final CourseMapper mapper;
   private final StudentService studentService;
   private final StudentMapper studentMapper;
 
-  public CourseServiceImpl(CourseRepository courseRepository,
-                           CourseMapper mapper,
-                           StudentService studentService,
-                           StudentMapper studentMapper) {
+  public CourseServiceImpl(
+      CourseRepository courseRepository,
+      CourseMapper mapper,
+      StudentService studentService,
+      StudentMapper studentMapper) {
     super(courseRepository);
     this.courseRepository = courseRepository;
     this.mapper = mapper;
@@ -84,15 +83,12 @@ public class CourseServiceImpl extends IdCheckingService<Course, Long>
   @Override
   public List<StudentDTO> getStudentsInCourse(Long courseId) {
     Course course = getIfExistById(courseId);
-    return course.getStudentList()
-            .stream()
-            .map(studentMapper::toDto)
-            .collect(Collectors.toList());
+    return course.getStudentList().stream().map(studentMapper::toDto).collect(Collectors.toList());
   }
 
   @Override
   public StudentDTO getStudentInCourse(Long courseId, Long studentId) {
-    return studentService.findByStudentIdAndCourseId(studentId,courseId);
+    return studentService.findByStudentIdAndCourseId(studentId, courseId);
   }
 
   @Override
