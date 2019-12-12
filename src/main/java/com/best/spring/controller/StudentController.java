@@ -1,12 +1,14 @@
 package com.best.spring.controller;
 
+import com.best.spring.dto.PagedResponseDTO;
 import com.best.spring.dto.StudentDTO;
 import com.best.spring.dto.StudentRequestDto;
 import com.best.spring.mapper.StudentRequestMapper;
 import com.best.spring.service.StudentService;
-import java.util.List;
-import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/students")
@@ -21,8 +23,11 @@ public class StudentController {
   }
 
   @GetMapping
-  public List<StudentDTO> getAllStudents() {
-    return studentService.getAll();
+  public PagedResponseDTO<List<StudentDTO>> getAllStudents(@RequestParam(defaultValue = "0") Integer pageNo,
+                                                          @RequestParam(defaultValue = "2") Integer pageSize,
+                                                          @RequestParam(defaultValue = "id") String sortBy,
+                                                          @RequestParam(defaultValue = "true") boolean isAscending) {
+    return studentService.getAll(pageNo, pageSize, sortBy, isAscending);
   }
 
   @PostMapping

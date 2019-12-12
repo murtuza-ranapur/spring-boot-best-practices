@@ -1,20 +1,30 @@
 package com.best.spring.service.impl;
 
 import com.best.spring.domain.Student;
+import com.best.spring.dto.PagedResponseDTO;
 import com.best.spring.dto.StudentDTO;
 import com.best.spring.exception.EntityNotFoundException;
 import com.best.spring.mapper.StudentMapper;
 import com.best.spring.repository.StudentRepository;
 import com.best.spring.service.StudentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.stereotype.Service;
 
 @Service
 public class StudentServiceImpl extends IdCheckingService<Student, Long> implements StudentService {
 
   private final StudentRepository studentRepository;
   private final StudentMapper mapper;
+  private final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
   public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper) {
     super(studentRepository);
@@ -25,6 +35,20 @@ public class StudentServiceImpl extends IdCheckingService<Student, Long> impleme
   @Override
   public List<StudentDTO> getAll() {
     return studentRepository.findAll().stream().map(mapper::toDto).collect(Collectors.toList());
+  }
+
+  @Override
+  public PagedResponseDTO<List<StudentDTO>> getAll(Integer pageNo, Integer pageSize, String sortBy, boolean isAscending) {
+    Sort sort = isAscending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+    Pageable paging = PageRequest.of(pageNo, pageSize, sort);
+    Page<Student> pagedResult = studentRepository.findAll(paging);
+    logger.info("Total element {}, total page {}, current page {}",pagedResult.getTotalElements(),pagedResult.getTotalPages(),pagedResult.getNumber());
+    if(pagedResult.hasContent()) {
+      List<StudentDTO> studentDTOList = pagedResult.getContent().stream().map(mapper::toDto).collect(Collectors.toList());
+      return new PagedResponseDTO<>(pagedResult.getTotalElements(), pagedResult.getTotalPages(), pagedResult.getNumber(), studentDTOList);
+    } else {
+      return new PagedResponseDTO<>(0L, 0, pageNo, new ArrayList<>());
+    }
   }
 
   @Override
