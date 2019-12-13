@@ -64,9 +64,9 @@ public class GenericRsqlSpecification<T> implements Specification<T> {
         return root.get(property).in(args);
       case NOT_IN:
         return builder.not(root.get(property).in(args));
+      default:
+        return null;
     }
-
-    return null;
   }
 
   private List<Object> castArguments(final Root<T> root) {
