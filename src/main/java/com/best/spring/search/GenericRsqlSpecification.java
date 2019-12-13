@@ -86,5 +86,4 @@ public class GenericRsqlSpecification<T> implements Specification<T> {
             })
         .collect(Collectors.toList());
   }
-
 }
