@@ -23,11 +23,13 @@ public class StudentController {
   }
 
   @GetMapping
-  public PagedResponseDTO<List<StudentDTO>> getAllStudents(@RequestParam(defaultValue = "0") Integer pageNo,
-                                                          @RequestParam(defaultValue = "2") Integer pageSize,
-                                                          @RequestParam(defaultValue = "id") String sortBy,
-                                                          @RequestParam(defaultValue = "true") boolean isAscending) {
-    return studentService.getAll(pageNo, pageSize, sortBy, isAscending);
+  public PagedResponseDTO<List<StudentDTO>> getAllStudents(
+      @RequestParam(defaultValue = "0") Integer pageNo,
+      @RequestParam(defaultValue = "2") Integer pageSize,
+      @RequestParam(defaultValue = "id") String sortBy,
+      @RequestParam(defaultValue = "true") boolean isAscending,
+      @RequestParam(defaultValue = "") String search) {
+    return studentService.getAll(pageNo, pageSize, sortBy, isAscending, search);
   }
 
   @PostMapping
