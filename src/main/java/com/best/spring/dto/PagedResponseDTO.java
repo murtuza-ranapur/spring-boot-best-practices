@@ -5,10 +5,10 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PagedResponseDTO<DTOList> {
+public class PagedResponseDTO<T> {
     private Long total;
     private Integer pages;
     private Integer current;
-    private DTOList data;
+    private T data;
 
 }
