@@ -1,15 +1,14 @@
 package com.best.spring.search;
 
 import cz.jirutka.rsql.parser.ast.ComparisonOperator;
-import lombok.AllArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
-
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 
 @AllArgsConstructor
 public class GenericRsqlSpecification<T> implements Specification<T> {

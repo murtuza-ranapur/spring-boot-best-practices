@@ -23,3 +23,6 @@ INSERT INTO public.student(
 INSERT INTO public.student(
 	id, created_date, last_modified_date, batch, class_section, name, semester, year, course_id)
 	VALUES (nextval('hibernate_sequence'), now(), now(), 2016, 'B', 'Honey Marry', 6, 3, 3);
+
+drop table if exists student_course_view cascade;
+create view student_course_view as select s.id as "student_id", s.name, c.code as "course_code", c.name as "course_name" from student s join course c on s.course_id = c.id;

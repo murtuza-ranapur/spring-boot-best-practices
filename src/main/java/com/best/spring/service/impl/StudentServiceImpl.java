@@ -10,6 +10,9 @@ import com.best.spring.search.CustomRsqlVisitor;
 import com.best.spring.service.StudentService;
 import cz.jirutka.rsql.parser.RSQLParser;
 import cz.jirutka.rsql.parser.ast.Node;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -20,16 +23,12 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 public class StudentServiceImpl extends IdCheckingService<Student, Long> implements StudentService {
 
   private final StudentRepository studentRepository;
   private final StudentMapper mapper;
-  private final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
   public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper) {
     super(studentRepository);
