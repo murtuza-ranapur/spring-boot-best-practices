@@ -7,9 +7,10 @@ import com.best.spring.dto.StudentRequestDto;
 import com.best.spring.mapper.StudentRequestMapper;
 import com.best.spring.service.StudentCourseViewService;
 import com.best.spring.service.StudentService;
-import java.util.List;
-import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/students")

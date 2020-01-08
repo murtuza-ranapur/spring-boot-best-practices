@@ -47,12 +47,4 @@ public class CustomExceptionHandlingControllerAdvice {
     return new ErrorMessageResponse<>(ErrorTypes.INVALID_ARGUMENT, message);
   }
 
-  @ExceptionHandler(Exception.class)
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorMessageResponse<String> onDefaultException(Exception e) {
-    String message =
-        messageSource.getMessage(
-            "api.unkown", new Object[] {e.getMessage()}, LocaleContextHolder.getLocale());
-    return new ErrorMessageResponse<>(ErrorTypes.UNKNOWN, message);
-  }
 }

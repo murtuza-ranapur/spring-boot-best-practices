@@ -7,8 +7,9 @@ import com.best.spring.dto.StudentRequestDto;
 import com.best.spring.mapper.CourseRequestMapper;
 import com.best.spring.mapper.StudentRequestMapper;
 import com.best.spring.service.CourseService;
-import java.util.List;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/courses")
