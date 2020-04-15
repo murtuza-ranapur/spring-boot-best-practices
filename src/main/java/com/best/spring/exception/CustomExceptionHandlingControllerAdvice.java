@@ -46,5 +46,4 @@ public class CustomExceptionHandlingControllerAdvice {
             LocaleContextHolder.getLocale());
     return new ErrorMessageResponse<>(ErrorTypes.INVALID_ARGUMENT, message);
   }
-
 }

@@ -1,11 +1,10 @@
 package com.best.spring.domain;
 
-import lombok.Getter;
-import org.hibernate.annotations.Immutable;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.Getter;
+import org.hibernate.annotations.Immutable;
 
 @Entity
 @Table(name = "student_course_view")
