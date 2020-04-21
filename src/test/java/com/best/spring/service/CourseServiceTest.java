@@ -1,7 +1,6 @@
 package com.best.spring.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -164,17 +163,5 @@ public class CourseServiceTest {
     courseServiceMock.delete(1L);
 
     verify(courseRepositoryMock, times(1)).delete(course1);
-  }
-
-  @Test
-  public void get_givenNonExistentUserId_shouldThrowExeption() {
-
-    Mockito.when(courseRepositoryMock.findById(1L)).thenReturn(Optional.empty());
-
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> {
-          courseServiceMock.get(1L);
-        });
   }
 }
