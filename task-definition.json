@@ -2,7 +2,6 @@
   "executionRoleArn": "arn:aws:iam::497654570788:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
-      "dnsSearchDomains": null,
       "logConfiguration": null,
       "entryPoint": null,
       "portMappings": [
