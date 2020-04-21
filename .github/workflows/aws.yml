@@ -80,6 +80,8 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: learn-ec2-service
-        cluster: ec2-new-cluster
+#        service: learn-ec2-service
+#        cluster: ec2-new-cluster
+        service: learn-service
+        cluster: ec2-small-cluster
         wait-for-service-stability: true
