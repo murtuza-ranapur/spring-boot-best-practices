@@ -57,8 +57,5 @@
     "EC2"
   ],
   "networkMode": "bridge",
-  "cpu": "1024",
-  "inferenceAccelerators": null,
-  "proxyConfiguration": null,
-  "volumes": []
+  "cpu": "1024"
 }
