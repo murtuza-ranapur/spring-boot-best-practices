@@ -32,6 +32,12 @@ public class CourseController {
     return courseService.getAll();
   }
 
+  @GetMapping("/search")
+  public List<CourseDTO> searchCourses(
+      @RequestParam("field") String field, @RequestParam("value") String value) {
+    return courseService.search(field, value);
+  }
+
   @GetMapping("/{id}")
   public CourseDTO getCourse(@PathVariable Long id) {
     return courseService.get(id);

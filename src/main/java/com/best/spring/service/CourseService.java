@@ -12,6 +12,8 @@ public interface CourseService extends CrudService<CourseDTO, Long> {
 
   List<StudentDTO> getStudentsInCourse(Long courseId);
 
+  List<CourseDTO> search(String field, String value);
+
   StudentDTO getStudentInCourse(Long courseId, Long studentId);
 
   void deleteStudentInCourse(Long courseId, Long studentId);

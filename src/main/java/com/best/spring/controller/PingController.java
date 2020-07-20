@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/ping")
 public class PingController {
 
-    @GetMapping
-    public PingDTO getAllCourses() {
-        return new PingDTO();
-    }
+  @GetMapping
+  public PingDTO getAllCourses() {
+    return new PingDTO();
+  }
 }

@@ -6,12 +6,16 @@ import com.best.spring.dto.StudentDTO;
 import com.best.spring.mapper.CourseMapper;
 import com.best.spring.mapper.StudentMapper;
 import com.best.spring.repository.CourseRepository;
+import com.best.spring.search.CourseSearchService;
 import com.best.spring.service.CourseService;
 import com.best.spring.service.StudentService;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class CourseServiceImpl extends IdCheckingService<Course, Long> implements CourseService {
 
@@ -19,17 +23,20 @@ public class CourseServiceImpl extends IdCheckingService<Course, Long> implement
   private final CourseMapper mapper;
   private final StudentService studentService;
   private final StudentMapper studentMapper;
+  private final CourseSearchService searchService;
 
   public CourseServiceImpl(
       CourseRepository courseRepository,
       CourseMapper mapper,
       StudentService studentService,
-      StudentMapper studentMapper) {
+      StudentMapper studentMapper,
+      CourseSearchService searchService) {
     super(courseRepository);
     this.courseRepository = courseRepository;
     this.mapper = mapper;
     this.studentService = studentService;
     this.studentMapper = studentMapper;
+    this.searchService = searchService;
   }
 
   @Override
@@ -37,6 +44,7 @@ public class CourseServiceImpl extends IdCheckingService<Course, Long> implement
     return courseRepository.findAll().stream().map(mapper::fromCourse).collect(Collectors.toList());
   }
 
+  @Cacheable("course")
   @Override
   public CourseDTO get(Long id) {
     Course course = getIfExistById(id);
@@ -84,6 +92,13 @@ public class CourseServiceImpl extends IdCheckingService<Course, Long> implement
   public List<StudentDTO> getStudentsInCourse(Long courseId) {
     Course course = getIfExistById(courseId);
     return course.getStudentList().stream().map(studentMapper::toDto).collect(Collectors.toList());
+  }
+
+  @Override
+  public List<CourseDTO> search(String field, String value) {
+    return searchService.searchCourses(field, value).stream()
+        .map(mapper::fromCourse)
+        .collect(Collectors.toList());
   }
 
   @Override

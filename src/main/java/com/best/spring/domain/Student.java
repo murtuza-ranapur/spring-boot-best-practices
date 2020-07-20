@@ -5,17 +5,20 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 @Data
 @Entity
+@Indexed(index = "student")
 @EqualsAndHashCode(callSuper = false)
 public class Student extends Autditable {
 
   @Id @GeneratedValue private Long id;
 
-  private String name;
+  @Field private String name;
 
-  private Long semester;
+  @Field private Long semester;
 
   @Setter(AccessLevel.NONE)
   private Long year;
